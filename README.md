@@ -1,2 +1,2 @@
 # ujenzizone-admin
-Admin Pannel For Managin Ujenzi Zone Users
+Admin Pannel For Managing Ujenzi Zone Users
