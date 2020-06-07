@@ -13,9 +13,14 @@ export default function() {
     },
     {
       title: "Add New Fundi",
+      htmlBefore: '<i class="material-icons">person</i>',
+      to: "/user-profile-lite",
+    },
+   /*  {
+      title: "Add New Fundi",
       htmlBefore: '<i class="material-icons">note_add</i>',
       to: "/add-new-post",
-    },
+    }, */
     {
       title: "Mafundi Categories",
       htmlBefore: '<i class="material-icons">view_module</i>',
@@ -26,15 +31,10 @@ export default function() {
       htmlBefore: '<i class="material-icons">table_chart</i>',
       to: "/tables",
     },
-    /* {
-      title: "User Profile",
-      htmlBefore: '<i class="material-icons">person</i>',
-      to: "/user-profile-lite",
-    },
     {
       title: "Errors",
       htmlBefore: '<i class="material-icons">error</i>',
       to: "/errors",
-    } */
+    } 
   ];
 }
