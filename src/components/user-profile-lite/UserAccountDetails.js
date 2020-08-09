@@ -29,14 +29,14 @@ const UserAccountDetails = ({ title }) => {
     async function fetchCategories() {
       try {
         const mafundi = await axios.get('http://localhost:4500/api/v1/categories');
-        setCategories(mafundi);
+        console.log('Hapa', mafundi)
+        setCategories(mafundi.data);
       } catch (e) {
         console.log('Hapa', e.message)
       }
     };
     fetchCategories();
   }, [])
-  console.log(categories);
   const itemList = categories.map((item, key) =>
     <option id={item._id}> {item.name}</option>
   )
@@ -132,7 +132,7 @@ const UserAccountDetails = ({ title }) => {
                   <Col md="12" className="form-group">
                     <label htmlFor="feInputState">Category</label>
                     <FormSelect id="feInputState">
-                      <option>Choose...</option>
+                      <option id='_1'>Choose...</option>
                       {itemList}
                     </FormSelect>
                   </Col>
