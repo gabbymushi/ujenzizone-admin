@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from 'axios';
+import * as userService from './UserService';
 import {
   Card,
   CardHeader,
@@ -22,13 +23,31 @@ const UserAccountDetails = ({ title }) => {
   const [lastName, setlastName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [otherPhoneNumber, setOtherPhoneNumber] = useState('');
+  const [category, setCategory] = useState('');
+  const [dob, setDOB] = useState('');
+  const [gender, setGender] = useState('');
   const [categories, setCategories] = useState([]);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const user = {
+      firstName,
+      middleName,
+      lastName,
+      dob,
+      phoneNumber,
+      otherPhoneNumber,
+      category,
+      gender
+    }
+    const userResponse = await userService.postUser(user);
+    console.log('userResponse', userResponse);
+  }
 
   useEffect(() => {
     async function fetchCategories() {
       try {
-        const mafundi = await axios.get('http://localhost:4500/api/v1/categories');
+        const mafundi = await userService.fetchCategories();
         console.log('Hapa', mafundi)
         setCategories(mafundi.data);
       } catch (e) {
@@ -38,7 +57,7 @@ const UserAccountDetails = ({ title }) => {
     fetchCategories();
   }, [])
   const itemList = categories.map((item, key) =>
-    <option id={item._id}> {item.name}</option>
+    <option id={item._id} value={item._id}> {item.name}</option>
   )
   return (
     <Card small className="mb-4">
@@ -49,7 +68,7 @@ const UserAccountDetails = ({ title }) => {
         <ListGroupItem className="p-3">
           <Row>
             <Col>
-              <Form>
+              <Form onSubmit={handleSubmit} action="" method="POST">
                 <Row form>
                   {/* First Name */}
                   <Col md="6" className="form-group">
@@ -90,8 +109,8 @@ const UserAccountDetails = ({ title }) => {
                     <FormInput
                       type="date"
                       id="dob"
-                      placeholder="Password"
-                      onChange={() => { }}
+                      placeholder="D.O.B"
+                      onChange={(e) => { setDOB(e.target.value) }}
                     //autoComplete="current-password"
                     />
                   </Col>
@@ -129,22 +148,28 @@ const UserAccountDetails = ({ title }) => {
                     />
                   </Col> */}
                   {/* State */}
-                  <Col md="12" className="form-group">
+                  <Col md="6" className="form-group">
                     <label htmlFor="feInputState">Category</label>
-                    <FormSelect id="feInputState">
+                    <FormSelect id="feInputState"
+                      //value={category}
+                      onChange={(e) => { setCategory(e.target.value) }}
+                    >
                       <option id='_1'>Choose...</option>
                       {itemList}
                     </FormSelect>
                   </Col>
                   {/* Zip Code */}
-                  {/*    <Col md="2" className="form-group">
-                    <label htmlFor="feZipCode">Zip</label>
-                    <FormInput
-                      id="feZipCode"
-                      placeholder="Zip"
-                      onChange={() => { }}
-                    />
-                  </Col> */}
+                  <Col md="6" className="form-group">
+                    <label htmlFor="feZipCode">Gender</label>
+                    <FormSelect id="feInputState"
+                      //value={category}
+                      onChange={(e) => { setGender(e.target.value) }}
+                    >
+                      <option value=''>Choose...</option>
+                      <option value='male'>Male</option>
+                      <option value='female'>Female</option>
+                    </FormSelect>
+                  </Col>
                 </Row>
                 <FormGroup>
                   <label htmlFor="feAddress">Address</label>
@@ -187,7 +212,7 @@ const UserAccountDetails = ({ title }) => {
                     <FormTextarea id="feDescription" rows="5" />
                   </Col>
                 </Row> */}
-                <Button theme="accent">Create Account</Button>
+                <Button type="submit" theme="accent">Create Account</Button>
               </Form>
             </Col>
           </Row>
