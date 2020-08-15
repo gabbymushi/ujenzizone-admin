@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from 'axios';
+import * as userService from './UserService';
 import {
   Card,
   CardHeader,
@@ -28,7 +29,7 @@ const UserAccountDetails = ({ title }) => {
   useEffect(() => {
     async function fetchCategories() {
       try {
-        const mafundi = await axios.get('http://localhost:4500/api/v1/categories');
+        const mafundi = await userService.fetchCategories();
         console.log('Hapa', mafundi)
         setCategories(mafundi.data);
       } catch (e) {
